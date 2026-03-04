@@ -1,0 +1,33 @@
+# Utilise la dernière version disponible de Node.js sur Debian Bookworm
+FROM node:current-bookworm
+
+# Évite les prompts interactifs lors de l'installation des paquets
+ENV DEBIAN_FRONTEND=noninteractive
+RUN echo "APT::Get::Assume-Yes \"true\";" > /etc/apt/apt.conf.d/90assumeyes
+
+# Installation des dépendances requises par l'agent Azure DevOps et d'outils basiques (git, zip, etc.)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    curl \
+    jq \
+    git \
+    iputils-ping \
+    libcurl4 \
+    libicu-dev \
+    libunwind8 \
+    netcat-openbsd \
+    zip \
+    unzip \
+    apt-transport-https \
+    software-properties-common \
+ && rm -rf /var/lib/apt/lists/*
+
+# Création du répertoire de travail pour l'agent
+WORKDIR /azp
+
+# Copie du script de démarrage
+COPY start.sh .
+RUN chmod +x start.sh
+
+# Définition du script de démarrage comme point d'entrée
+CMD ["./start.sh"]

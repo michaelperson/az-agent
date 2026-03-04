@@ -1,0 +1,5 @@
+docker run -e AZP_URL="https://dev.azure.com/BSDevops2025" \
+           -e AZP_TOKEN="VOTRE_PERSONAL_ACCESS_TOKEN" \
+           -e AZP_POOL="croissant-local-pool" \
+           -e AZP_AGENT_NAME="agent-docker-local" \
+           -d croissant-agent:latest
