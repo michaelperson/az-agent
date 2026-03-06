@@ -1,5 +1,37 @@
+##lancer l'agent local
+
 docker run -e AZP_URL="https://dev.azure.com/BSDevops2025" \
            -e AZP_TOKEN="VOTRE_PERSONAL_ACCESS_TOKEN" \
            -e AZP_POOL="croissant-local-pool" \
            -e AZP_AGENT_NAME="agent-docker-local" \
            -d croissant-agent:latest
+
+
+docker run -e AZP_URL="https://dev.azure.com/BSDevops2025" -e AZP_TOKEN="7uh5Kk3r6bdklBADw5vaUPnjdRiRzkC2t3oQt01UgXfYG5PefvqFJQQJ99CCACAAAAAAAAAAAAASAZDO13yW" -e AZP_POOL="croissant-local-pool" -e AZP_AGENT_NAME="agent-docker-local" --name croissant_local_ppol -d croissant-agent:latest
+
+##lancer sonarqube
+
+docker compose up
+
+### Config
+Accède à l'interface : http://localhost:9000 (identifiants par défaut : admin / admin).
+
+Change le mot de passe comme demandé.(Test1234=Test1234 par exemple)
+
+Va dans My Account > Security et génère un Token (conserve-le précieusement).
+
+Crée un projet manuellement pour obtenir sa Project Key.
+
+##Configurer Azure DevOps
+Créer un lien entre ton portail Azure DevOps (dans le cloud) et l'instance locale.
+
+Dans le projet Azure DevOps, aller dans Project Settings > Service connections.
+
+Cliquer sur New service connection > SonarQube.
+
+Server URL : Entrer l'URL accessible par ton agent (ex: http://localhost:9000 si l'agent est sur l'hôte).
+
+Token : Coller le token généré à l'étape 2.
+
+Donner un nom (ex: SonarQube_Local).
+

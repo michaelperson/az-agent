@@ -1,0 +1,23 @@
+trigger:
+- main
+
+pool:
+  name: 'Default' # Assure-toi que c'est le nom de ton pool d'agent local
+
+steps:
+- task: SonarQubePrepare@5
+  inputs:
+    SonarQube: 'SonarQube_Local' # Nom de la service connection
+    scannerMode: 'MSBuild'
+    projectKey: 'MonProjet_Key'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
+- task: SonarQubeAnalyze@5
+
+- task: SonarQubePublish@5
+  inputs:
+    pollingTimeoutSec: '300'
