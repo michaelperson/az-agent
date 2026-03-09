@@ -31,11 +31,22 @@ services:
     image: croissant-agent:latest
     container_name: croissant_local_ppol
     restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env
     networks:
       - sonarnet
 
+  croissant-web-prod:
+    image: nginx:alpine
+    container_name: croissant_prod_app
+    ports:
+      - "8080:80"
+    networks:
+      - sonarnet
+    volumes:
+      - web_data:/usr/share/nginx/html
 networks:
   sonarnet:
 
@@ -44,3 +55,4 @@ volumes:
   sonarqube_extensions:
   sonarqube_logs:
   postgresql_data:
+  web_data:

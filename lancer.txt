@@ -7,7 +7,6 @@ docker run -e AZP_URL="https://dev.azure.com/BSDevops2025" \
            -d croissant-agent:latest
 
 
-docker run -e AZP_URL="https://dev.azure.com/BSDevops2025" -e AZP_TOKEN="7uh5Kk3r6bdklBADw5vaUPnjdRiRzkC2t3oQt01UgXfYG5PefvqFJQQJ99CCACAAAAAAAAAAAAASAZDO13yW" -e AZP_POOL="croissant-local-pool" -e AZP_AGENT_NAME="agent-docker-local" --name croissant_local_ppol -d croissant-agent:latest
 
 ##lancer sonarqube
 
