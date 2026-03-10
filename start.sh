@@ -37,6 +37,31 @@ cleanup() {
 
 export VSO_AGENT_IGNORE=AZP_TOKEN,AZP_TOKEN_FILE
 
+# ─────────────────────────────────────────
+# PRÉ-INSTALLATION : Node.js + outils
+# ─────────────────────────────────────────
+echo "0. Installation de Node.js et des outils nécessaires..."
+
+# Installer Node.js v20 via NodeSource
+if ! command -v node &> /dev/null || [[ "$(node -v)" != v20* ]]; then
+  echo "   → Installation de Node.js 20..."
+  apt-get update -qq
+  apt-get install -y -qq curl ca-certificates gnupg
+  curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
+  apt-get install -y -qq nodejs
+else
+  echo "   → Node.js $(node -v) déjà installé, skip."
+fi
+
+echo "   → Node.js : $(node -v)"
+echo "   → npm     : $(npm -v)"
+echo "   → ESLint  : $(eslint --version)"
+echo "   → Sonar   : $(sonar-scanner -v 2>&1 | grep -i 'sonarscanner\|version' | head -1)"
+echo "   → Docker  : $(docker --version)"
+echo "✅ Outils prêts."
+
+# ─────────────────────────────────────────
+
 echo "1. Détermination de l'agent Azure Pipelines correspondant..."
 AZP_AGENT_PACKAGES=$(curl -LsS \
     -u user:$(cat "$AZP_TOKEN_FILE") \
